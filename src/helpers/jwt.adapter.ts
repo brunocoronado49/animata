@@ -3,7 +3,7 @@ import { envs } from '../config/envs';
 
 const jwt_seed: string = envs.JWT_SEED;
 
-export class JUwtAdapter {
+export class JwtAdapter {
   static async generateToken(payload: any, duration: any = '2h') {
     return new Promise((resolve) => {
       jwt.sign(payload, jwt_seed, { expiresIn: duration }, (err, token) => {
