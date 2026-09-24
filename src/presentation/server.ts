@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { Router } from 'express';
 import path from 'path';
 
 interface ServerOptions {
   port: number;
+  router: Router;
   publicPath?: string;
 }
 
@@ -10,12 +11,14 @@ export class Server {
   public readonly app = express();
 
   private readonly port: number;
+  private readonly router: Router;
   private readonly publicPath: string;
   private serverListener?: any;
 
   constructor(options: ServerOptions) {
-    const { port, publicPath = 'public' } = options;
+    const { port, router, publicPath = 'public' } = options;
     this.port = port;
+    this.router = router;
     this.publicPath = publicPath;
   }
 
@@ -24,6 +27,8 @@ export class Server {
     this.app.use(express.urlencoded({ extended: true }));
 
     this.app.use(express.static(this.publicPath));
+
+    this.app.use(this.router);
 
     this.app.get('/', (req, res) => {
       const indexPath = path.join(
