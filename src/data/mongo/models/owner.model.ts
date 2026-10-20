@@ -38,7 +38,6 @@ const emergencyContactSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Emergency contact phone is required'],
     },
-    relationship: { type: String },
   },
   { _id: false },
 );
