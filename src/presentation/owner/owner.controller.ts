@@ -12,7 +12,6 @@ export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   public createOwner = (req: Request, res: Response) => {
-    
     const [error, createOwnerDto] = CreateOwnerDto.create(req.body);
 
     if (error) return res.status(400).json({ error });

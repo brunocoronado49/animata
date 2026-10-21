@@ -7,8 +7,8 @@ export class CreatePetDto {
     public readonly specie: string,
     public readonly breed: string,
     public readonly gender: string,
-    public readonly is_neutered: boolean,
-    public readonly birth_date: Date,
+    public readonly isNeutered: boolean,
+    public readonly birthDate: Date,
     public readonly color: string,
     public readonly status: boolean,
     public readonly vaccinations: Vaccinations[],
@@ -18,18 +18,22 @@ export class CreatePetDto {
   ) {}
 
   static create(obj: { [key: string]: any }): [string?, CreatePetDto?] {
+    if (!obj) return ['Missing payload'];
+
     const {
       owner,
       name,
       specie,
       breed,
       gender,
-      is_neutered,
-      birth_date,
+      isNeutered,
+      birthDate,
       color,
       status,
       vaccinations,
-      dewormings,
+      dewormings = [],
+      photo,
+      micro_chip_id,
     } = obj;
 
     if (!owner) return ['Missing owner'];
@@ -37,16 +41,25 @@ export class CreatePetDto {
     if (!specie) return ['Missing specie'];
     if (!breed) return ['Missing breed'];
     if (!gender) return ['Missing gender'];
-    if (!is_neutered) return ['Missing is neutered'];
-    if (!birth_date) return ['Missing birth date'];
+
+    if (isNeutered === undefined || isNeutered === null) {
+      return ['Missing is neutered'];
+    }
+
+    if (!birthDate) return ['Missing birth date'];
     if (!color) return ['Missing color'];
-    if (!status) return ['Missing status'];
 
-    if (!Array.isArray(vaccinations))
-      return ['Should be an array of vaccination'];
+    if (status === undefined || status === null) {
+      return ['Missing status'];
+    }
 
-    if (!Array.isArray(dewormings))
-      return ['Should be an array of vaccination'];
+    if (!Array.isArray(vaccinations)) {
+      return ['Vaccinations must be an array'];
+    }
+
+    if (!Array.isArray(dewormings)) {
+      return ['Dewormings must be an array'];
+    }
 
     return [
       undefined!,
@@ -56,12 +69,14 @@ export class CreatePetDto {
         specie,
         breed,
         gender,
-        is_neutered,
-        birth_date,
+        isNeutered,
+        new Date(birthDate),
         color,
         status,
         vaccinations,
         dewormings,
+        photo,
+        micro_chip_id,
       ),
     ];
   }

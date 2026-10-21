@@ -63,7 +63,7 @@ const ownerSchema = new mongoose.Schema(
       type: addressSchema,
       required: [true, 'Address is required'],
     },
-    emergencyContact: {
+    emergency_contact: {
       type: emergencyContactSchema,
       required: [true, 'Emergency contact is required'],
     },

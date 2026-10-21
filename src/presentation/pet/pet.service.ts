@@ -77,8 +77,8 @@ export class PetService {
     try {
       await petModel.findByIdAndDelete(deletePetDto.id);
       return {
-        productId: deletePetDto.id,
-        product: pet.name,
+        petId: deletePetDto.id,
+        pet: pet.name,
         message: 'Pet deleted successfully',
       };
     } catch (error) {

@@ -13,7 +13,7 @@ export class UpdateOwnerDto {
   get values(): { [key: string]: any } {
     const returnObj: { [key: string]: any } = {};
 
-    if (this.fullName) returnObj.name = this.fullName;
+    if (this.fullName) returnObj.fullName = this.fullName;
     if (this.email) returnObj.email = this.email;
     if (this.phones) returnObj.phones = this.phones;
     if (this.address) returnObj.address = this.address;

@@ -57,7 +57,15 @@ export class OwnerService {
     if (!owner) throw CustomError.notFound('Owner not found');
 
     try {
-    } catch (error) {}
+      await ownerModel.findByIdAndDelete(deleteOwnerDto.id);
+      return {
+        ownerId: deleteOwnerDto.id,
+        name: owner.fullName,
+        message: 'Owner deleted successfully',
+      };
+    } catch (error) {
+      throw CustomError.internalServerError(`Error deleting owner: ${error}`);
+    }
   }
 
   public async getOwnerById(id: string) {
