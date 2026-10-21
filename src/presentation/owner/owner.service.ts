@@ -76,7 +76,6 @@ export class OwnerService {
         ownerModel
           .find()
           .skip((page - 1) * limit)
-          .populate('fullName')
           .limit(limit),
       ]);
 
